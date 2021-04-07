@@ -38,7 +38,7 @@ const App = () => {
         }
     };
 
-    const payload = searchResults ? searchResults.items.map((e) => {
+    const payload = searchResults && searchResults.items.map((e) => {
         const {
             name, stargazers_count, language, description, node_id,
         } = e;
@@ -59,7 +59,7 @@ const App = () => {
                 </div>
             </div>
         );
-    }) : null;
+    });
 
     return (
         <div className="container mt-4">
