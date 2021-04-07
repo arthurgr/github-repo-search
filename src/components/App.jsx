@@ -56,11 +56,11 @@ const App = () => {
 
     const payload = searchResults && searchResults.items.map((e) => {
         const {
-            name, stargazers_count, language, description, node_id,
+            name, stargazers_count, language, description, id,
         } = e;
         return (
             <ResultsCard
-                node_id={node_id}
+                id={id}
                 name={name}
                 description={description}
                 stargazers_count={stargazers_count}

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Icon from '../Icons/Icon';
 
 const ResultsCard = ({
-    node_id, name, description, stargazers_count, language,
+    id, name, description, stargazers_count, language,
 }) => (
-    <div className="card text-dark bg-light mb-4" key={node_id}>
+    <div className="card text-dark bg-light mb-4" key={id}>
         <h4 className="card-header">{name}</h4>
         <div className="card-body">
             <p><b>{description}</b></p>
@@ -23,7 +23,7 @@ const ResultsCard = ({
 );
 
 ResultsCard.propTypes = {
-    node_id: PropTypes.string,
+    id: PropTypes.number,
     name: PropTypes.string,
     description: PropTypes.string,
     stargazers_count: PropTypes.number,
@@ -31,7 +31,7 @@ ResultsCard.propTypes = {
 };
 
 ResultsCard.defaultProps = {
-    node_id: '',
+    id: null,
     name: '',
     description: '',
     stargazers_count: null,
