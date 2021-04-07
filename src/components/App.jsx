@@ -1,36 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import Icon from './Icons/Icon';
+import React, { useState, useEffect, useReducer } from 'react';
+import formReducer from './reducers/formReducer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
+import ResultsCard from './ResultsCard/ResultsCard';
+
+const initialFormState = {
+    searchQuery: '',
+    sortQuery: '',
+    filterQuery: '',
+};
 
 const App = () => {
-    const [searchParams, setSearchParams] = useState(null);
-    const [sortParams, setSortParams] = useState(null);
+    const [formState, dispatch] = useReducer(formReducer, initialFormState);
+    const { searchQuery, sortQuery, filterQuery } = formState;
     const [searchResults, setSearchResults] = useState(null);
 
     useEffect(() => {
-        console.log(sortParams);
-    }, [sortParams]);
+        console.log(formState);
+        console.log(`https://api.github.com/search/repositories?${searchQuery + sortQuery + filterQuery}`);
+    }, [formState]);
 
-    const apiURL = 'https://api.github.com/search/repositories?per_page=30&';
+    const buildQuery = (e, type) => {
+        let finishedPayload = null;
+        switch (type) {
+            case 'SEARCH':
+                finishedPayload = `q=${e.target.value}`;
+                break;
+            case 'SORT':
+                finishedPayload = `&sort=${e.target.value}`;
+                break;
+            case 'FILTER':
+                finishedPayload = `&language:${e.target.value}`;
+                break;
+            default:
+                break;
+        }
+        return finishedPayload ? dispatch({
+            type: 'HANDLE INPUT',
+            field: e.target.name,
+            payload: finishedPayload,
+        }) : formState;
+    };
 
     const searchSubmitHandler = async (e) => {
         e.preventDefault();
         try {
-            const getApi = await fetch(`${apiURL}q=${searchParams.replace(' ', '+')}`);
+            const getApi = await fetch(`https://api.github.com/search/repositories?${searchQuery + sortQuery + filterQuery}`);
             if (!getApi.ok) throw new Error('Github Request failed');
-            const apiResponse = await getApi.json();
-            setSearchResults(apiResponse);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const filterSubmitHandler = async (e) => {
-        e.preventDefault();
-        try {
-            const getApi = await fetch(`${apiURL}q=${searchParams.replace(' ', '+')}&sort=${sortParams}`);
-            if (!getApi.ok) throw new Error('Github Filter Request failed');
             const apiResponse = await getApi.json();
             setSearchResults(apiResponse);
         } catch (err) {
@@ -43,21 +59,13 @@ const App = () => {
             name, stargazers_count, language, description, node_id,
         } = e;
         return (
-            <div className="card text-dark bg-light mb-4" key={node_id}>
-                <h4 className="card-header">{name}</h4>
-                <div className="card-body">
-                    <p><b>{description}</b></p>
-                    <p>
-                        <Icon icon="STAR" fill="#ebc911" />
-                        {`Number of Stars: ${stargazers_count} `}
-                    </p>
-                    <p>
-                        <Icon icon="LANGUAGE" fill="#0055b0" />
-                        {`Language: ${language} `}
-                    </p>
-                    <a href="/" className="btn btn-secondary btn-sm">Show Details</a>
-                </div>
-            </div>
+            <ResultsCard
+                node_id={node_id}
+                name={name}
+                description={description}
+                stargazers_count={stargazers_count}
+                language={language}
+            />
         );
     });
 
@@ -68,30 +76,40 @@ const App = () => {
                 <form onSubmit={searchSubmitHandler} className="mb-4">
                     <label htmlFor="github-search" className="col-form-label-sm">Search Github Repositories</label>
                     <input
-                        type="text"
                         id="github-search"
                         className="form-control mb-3 col-12 col-lg-5"
-                        onChange={(e) => setSearchParams(e.target.value)}
+                        type="text"
+                        name="searchQuery"
+                        value={formState.search}
+                        onChange={(e) => buildQuery(e, 'SEARCH')}
                     />
-                    <button type="submit" className="btn btn-primary">Search</button>
-                </form>
-                {
-                    payload && (
-                        <form onSubmit={filterSubmitHandler} className="mb-4">
+                    {payload && (
+                        <>
                             <label htmlFor="sort-by" className="col-form-label-sm">Sort Results By</label>
                             <select
                                 className="form-control mb-4 col-12 col-md-4"
-                                id="sort-by"
-                                onChange={(e) => setSortParams(e.target.value)}
+                                name="sortQuery"
+                                value={formState.sort}
+                                onChange={(e) => buildQuery(e, 'SORT')}
                             >
-                                <option value="best_match">Best Match</option>
+                                <option defaultValue value="">Best Match (Default)</option>
                                 <option value="stars">Most Stars</option>
-                                <option value="fewest-stars">Fewest Stars</option>
+                                <option value="stars&order=asc">Fewest Stars</option>
                             </select>
-                            <button type="submit" className="btn btn-primary">Refine Search</button>
-                        </form>
-                    )
-                }
+                            <label htmlFor="sort-by" className="col-form-label-sm">Filter Results By Language</label>
+                            <select
+                                className="form-control mb-4 col-12 col-md-4"
+                                name="filterQuery"
+                                value={formState.filter}
+                                onChange={(e) => buildQuery(e, 'FILTER')}
+                            >
+                                <option value="">Sort By</option>
+                                <option value="JavaScript">Javascript</option>
+                            </select>
+                        </>
+                    )}
+                    <button type="submit" className="btn btn-primary">Search</button>
+                </form>
             </section>
             <section>
                 {payload}
