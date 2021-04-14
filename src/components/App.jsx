@@ -17,8 +17,8 @@ const App = () => {
 
     useEffect(() => {
         console.log(formState);
-        console.log(`https://api.github.com/search/repositories?${searchQuery + sortQuery + filterQuery}`);
-    }, [formState]);
+        console.log(`https://api.github.com/search/repositories?${searchQuery + filterQuery + sortQuery}`);
+    });
 
     const buildQuery = (e, type) => {
         let finishedPayload = null;
@@ -26,11 +26,11 @@ const App = () => {
             case 'SEARCH':
                 finishedPayload = `q=${e.target.value}`;
                 break;
+            case 'FILTER':
+                finishedPayload = `+language:"${e.target.value}"`;
+                break;
             case 'SORT':
                 finishedPayload = `&sort=${e.target.value}`;
-                break;
-            case 'FILTER':
-                finishedPayload = `&language:${e.target.value}`;
                 break;
             default:
                 break;
@@ -45,7 +45,7 @@ const App = () => {
     const searchSubmitHandler = async (e) => {
         e.preventDefault();
         try {
-            const getApi = await fetch(`https://api.github.com/search/repositories?${searchQuery + sortQuery + filterQuery}`);
+            const getApi = await fetch(`https://api.github.com/search/repositories?${searchQuery + filterQuery + sortQuery}`);
             if (!getApi.ok) throw new Error('Github Request failed');
             const apiResponse = await getApi.json();
             setSearchResults(apiResponse);
@@ -59,13 +59,15 @@ const App = () => {
             name, stargazers_count, language, description, id,
         } = e;
         return (
-            <ResultsCard
-                id={id}
-                name={name}
-                description={description}
-                stargazers_count={stargazers_count}
-                language={language}
-            />
+            <div key={id}>
+                <ResultsCard
+                    id={id}
+                    name={name}
+                    description={description}
+                    stargazers_count={stargazers_count}
+                    language={language}
+                />
+            </div>
         );
     });
 
@@ -103,8 +105,17 @@ const App = () => {
                                 value={formState.filter}
                                 onChange={(e) => buildQuery(e, 'FILTER')}
                             >
-                                <option value="">Sort By</option>
+                                <option value="">All Languages</option>
                                 <option value="JavaScript">Javascript</option>
+                                <option value="Java">Java</option>
+                                <option value="C%2B%2B">C++</option>
+                                <option value="Python">Python</option>
+                                <option value="C%23">C#</option>
+                                <option value="Assembly">Assembly</option>
+                                <option value="C">C</option>
+                                <option value="HTML">HTML</option>
+                                <option value="Typescript">Typescript</option>
+                                <option value="Hack">Hack</option>
                             </select>
                         </>
                     )}

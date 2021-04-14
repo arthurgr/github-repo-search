@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Icon from '../Icons/Icon';
 
 const ResultsCard = ({
-    id, name, description, stargazers_count, language,
+    name, description, stargazers_count, language,
 }) => (
-    <div className="card text-dark bg-light mb-4" key={id}>
+    <div className="card text-dark bg-light mb-4">
         <h4 className="card-header">{name}</h4>
         <div className="card-body">
             <p><b>{description}</b></p>
