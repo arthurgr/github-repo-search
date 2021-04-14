@@ -14,6 +14,7 @@ const App = () => {
     const [formState, dispatch] = useReducer(formReducer, initialFormState);
     const { searchQuery, sortQuery, filterQuery } = formState;
     const [searchResults, setSearchResults] = useState(null);
+    const [submitBtnState, setSubmitBtnState] = useState(false);
 
     useEffect(() => {
         console.log(formState);
@@ -44,6 +45,7 @@ const App = () => {
 
     const searchSubmitHandler = async (e) => {
         e.preventDefault();
+        await setSubmitBtnState(true);
         try {
             const getApi = await fetch(`https://api.github.com/search/repositories?${searchQuery + filterQuery + sortQuery}`);
             if (!getApi.ok) throw new Error('Github Request failed');
@@ -52,6 +54,7 @@ const App = () => {
         } catch (err) {
             console.log(err);
         }
+        await setSubmitBtnState(false);
     };
 
     const payload = searchResults && searchResults.items.map((e) => {
@@ -84,6 +87,7 @@ const App = () => {
                         name="searchQuery"
                         value={formState.search}
                         onChange={(e) => buildQuery(e, 'SEARCH')}
+                        required
                     />
                     {payload && (
                         <>
@@ -119,7 +123,7 @@ const App = () => {
                             </select>
                         </>
                     )}
-                    <button type="submit" className="btn btn-primary">Search</button>
+                    <button type="submit" className="btn btn-primary" disabled={submitBtnState}>Search</button>
                 </form>
             </section>
             <section>
