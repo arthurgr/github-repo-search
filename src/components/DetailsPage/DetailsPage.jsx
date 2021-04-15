@@ -25,16 +25,16 @@ const DetailsPage = () => {
                         {`Language: ${language} `}
                     </p>
                     <p>
-                        <Icon icon="LANGUAGE" fill="#0055b0" />
+                        <Icon icon="EYE" fill="#00803a" />
                         {`Watchers: ${watchers_count} `}
                     </p>
                     <p>
-                        <Icon icon="LANGUAGE" fill="#0055b0" />
+                        <Icon icon="FORKS" fill="#5e5e5e" />
                         {`Forks: ${forks_count} `}
                     </p>
                     <p>
-                        <Icon icon="LANGUAGE" fill="#0055b0" />
-                        {`URL: ${html_url} `}
+                        <Icon icon="LINK" fill="#0055b0" />
+                        <a href={html_url} target="_blank" rel="noreferrer">{`URL: ${html_url} `}</a>
                     </p>
                     <Link to="/" className="btn btn-secondary btn-sm">Back</Link>
                 </div>
