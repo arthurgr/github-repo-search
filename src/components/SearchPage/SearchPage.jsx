@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
 import formReducer from '../reducers/formReducer';
 import ResultsCard from '../ResultsCard/ResultsCard';
 
@@ -14,10 +14,10 @@ const SearchPage = () => {
     const [searchResults, setSearchResults] = useState(null);
     const [submitBtnState, setSubmitBtnState] = useState(false);
 
-    useEffect(() => {
-        console.log(formState);
-        console.log(`https://api.github.com/search/repositories?${searchQuery + filterQuery + sortQuery}`);
-    });
+    // useEffect(() => {
+    //     console.log(formState);
+    //     console.log(`https://api.github.com/search/repositories?${searchQuery + filterQuery + sortQuery}`);
+    // });
 
     const buildQuery = (e, type) => {
         let finishedPayload = null;
