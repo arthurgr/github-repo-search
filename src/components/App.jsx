@@ -10,8 +10,12 @@ import './App.scss';
 const App = () => (
     <Router>
         <div className="container mt-4">
-            <Route path="/" exact component={SearchPage} />
-            <Route path="/repository-details" component={DetailsPage} />
+            <Route path="/" exact>
+                <SearchPage />
+            </Route>
+            <Route path="/repository-details">
+                <DetailsPage />
+            </Route>
         </div>
     </Router>
 );
