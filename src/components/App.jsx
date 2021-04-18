@@ -59,31 +59,12 @@ const App = () => {
         await setSubmitBtnState(false);
     };
 
-    const payload = searchResults && searchResults.items.map((e) => {
-        const {
-            name,
-            stargazers_count,
-            language,
-            description,
-            id,
-            watchers_count,
-            forks_count,
-            html_url,
-        } = e;
-        return (
-            <div key={id}>
-                <ResultsCard
-                    name={name}
-                    description={description}
-                    stargazers_count={stargazers_count}
-                    language={language}
-                    watchers_count={watchers_count}
-                    forks_count={forks_count}
-                    html_url={html_url}
-                />
-            </div>
-        );
-    });
+    const payload = searchResults && searchResults.items.map((result) => (
+        <div key={result.id}>
+            <ResultsCard result={result} />
+        </div>
+    ));
+
 
     return (
         <Router>

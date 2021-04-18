@@ -3,29 +3,24 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Icon from '../Icons/Icon';
 
-const ResultsCard = ({
-    name, description, stargazers_count, language, watchers_count, forks_count, html_url,
-}) => {
-    const repoDetails = {
-        name, description, stargazers_count, language, watchers_count, forks_count, html_url,
-    };
+const ResultsCard = ({ result }) => {
     const clickHandler = () => {
         localStorage.clear();
-        localStorage.setItem('repoDetails', JSON.stringify(repoDetails));
+        localStorage.setItem('result', JSON.stringify(result));
     };
 
     return (
         <div className="card text-dark bg-light mb-4">
-            <h4 className="card-header">{name}</h4>
+            <h4 className="card-header">{result.name}</h4>
             <div className="card-body">
-                <p><b>{description}</b></p>
+                <p><b>{result.description}</b></p>
                 <p>
                     <Icon icon="STAR" fill="#ebc911" />
-                    {`Number of Stars: ${stargazers_count} `}
+                    {`Number of Stars: ${result.stargazers_count} `}
                 </p>
                 <p>
                     <Icon icon="LANGUAGE" fill="#0055b0" />
-                    {`Language: ${language} `}
+                    {`Language: ${result.language} `}
                 </p>
                 <Link to="/repository-details" onClick={clickHandler} className="btn btn-secondary btn-sm">Show Details</Link>
             </div>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Icon from '../Icons/Icon';
 
 const DetailsPage = () => {
-    const retrievedObject = JSON.parse(localStorage.getItem('repoDetails'));
+    const retrievedObject = JSON.parse(localStorage.getItem('result'));
     const {
         name, description, stargazers_count, language, watchers_count, forks_count, html_url,
     } = retrievedObject;
