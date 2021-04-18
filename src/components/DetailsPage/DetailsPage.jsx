@@ -4,7 +4,6 @@ import Icon from '../Icons/Icon';
 
 const DetailsPage = () => {
     const retrievedObject = JSON.parse(localStorage.getItem('repoDetails'));
-    console.log('retrievedObject: ', retrievedObject);
     const {
         name, description, stargazers_count, language, watchers_count, forks_count, html_url,
     } = retrievedObject;

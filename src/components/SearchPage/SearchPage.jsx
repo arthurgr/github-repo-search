@@ -65,12 +65,13 @@ SearchPage.propTypes = {
     buildQuery: PropTypes.func.isRequired,
     searchSubmitHandler: PropTypes.func.isRequired,
     formState: PropTypes.objectOf(PropTypes.any).isRequired,
-    submitBtnState: PropTypes.func.isRequired,
-    payload: PropTypes.func,
+    submitBtnState: PropTypes.bool,
+    payload: PropTypes.arrayOf(PropTypes.any),
 };
 
 SearchPage.defaultProps = {
     payload: null,
+    submitBtnState: null,
 };
 
 export default SearchPage;
