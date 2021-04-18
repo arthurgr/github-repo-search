@@ -65,7 +65,6 @@ const App = () => {
         </div>
     ));
 
-
     return (
         <Router>
             <div className="container mt-4">

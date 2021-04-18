@@ -29,25 +29,11 @@ const ResultsCard = ({ result }) => {
 };
 
 ResultsCard.propTypes = {
-    id: PropTypes.number,
-    name: PropTypes.string,
-    description: PropTypes.string,
-    stargazers_count: PropTypes.number,
-    language: PropTypes.string,
-    watchers_count: PropTypes.number,
-    forks_count: PropTypes.number,
-    html_url: PropTypes.string,
+    result: PropTypes.objectOf(PropTypes.any),
 };
 
 ResultsCard.defaultProps = {
-    id: null,
-    name: '',
-    description: '',
-    stargazers_count: null,
-    language: '',
-    watchers_count: null,
-    forks_count: null,
-    html_url: null,
+    result: {},
 };
 
 export default ResultsCard;
