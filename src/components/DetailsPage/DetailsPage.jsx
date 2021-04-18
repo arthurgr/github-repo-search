@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Icon from '../Icons/Icon';
 
 const DetailsPage = () => {
     const retrievedObject = JSON.parse(localStorage.getItem('result'));
+    const history = useHistory();
     const {
         name, description, stargazers_count, language, watchers_count, forks_count, html_url,
     } = retrievedObject;
@@ -35,7 +36,7 @@ const DetailsPage = () => {
                         <Icon icon="LINK" fill="#0055b0" />
                         <a href={html_url} target="_blank" rel="noreferrer">{`URL: ${html_url} `}</a>
                     </p>
-                    <Link to="/" className="btn btn-secondary btn-sm">Back</Link>
+                    <button type="button" onClick={() => history.goBack()} alt="Go back" className="btn btn-secondary btn-sm">Back</button>
                 </div>
             </div>
         </>
