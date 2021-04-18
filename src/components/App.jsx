@@ -1,10 +1,8 @@
 import React, { useState, useReducer } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
 import SearchPage from './SearchPage/SearchPage';
 import DetailsPage from './DetailsPage/DetailsPage';
 import ResultsCard from './ResultsCard/ResultsCard';
-
 import formReducer from './reducers/formReducer';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,7 +19,6 @@ const App = () => {
     const { searchQuery, sortQuery, filterQuery } = formState;
     const [searchResults, setSearchResults] = useState(null);
     const [submitBtnState, setSubmitBtnState] = useState(false);
-
 
     const buildQuery = (e, type) => {
         let finishedPayload = null;
@@ -70,7 +67,6 @@ const App = () => {
             <div className="container mt-4">
                 <Route path="/" exact>
                     <SearchPage
-                        searchResults={searchResults}
                         buildQuery={buildQuery}
                         searchSubmitHandler={searchSubmitHandler}
                         formState={formState}
