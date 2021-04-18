@@ -44,16 +44,17 @@ const App = () => {
 
     const searchSubmitHandler = async (e) => {
         e.preventDefault();
-        await setSubmitBtnState(true);
         try {
+            setSubmitBtnState(true);
             const getApi = await fetch(`https://api.github.com/search/repositories?${searchQuery + filterQuery + sortQuery}`);
             if (!getApi.ok) throw new Error('Github Request failed');
             const apiResponse = await getApi.json();
             setSearchResults(apiResponse);
+            await setSubmitBtnState(false);
         } catch (err) {
             console.log(err);
+            setSubmitBtnState(false);
         }
-        await setSubmitBtnState(false);
     };
 
     const payload = searchResults && searchResults.items.map((result) => (
