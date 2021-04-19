@@ -22,7 +22,7 @@ const ResultsCard = ({ result }) => {
                     <Icon icon="LANGUAGE" fill="#0055b0" />
                     {`Language: ${result.language} `}
                 </p>
-                <Link to={`/repository-details/${result.name}`} onClick={clickHandler} className="btn btn-secondary btn-sm">Show Details</Link>
+                <Link to="/repository-details" onClick={clickHandler} className="btn btn-secondary btn-sm">Show Details</Link>
             </div>
         </div>
     );

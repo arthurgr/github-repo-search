@@ -74,7 +74,7 @@ const App = () => {
                         payload={payload}
                     />
                 </Route>
-                <Route path="/repository-details/:details">
+                <Route path="/repository-details">
                     <DetailsPage />
                 </Route>
             </div>
