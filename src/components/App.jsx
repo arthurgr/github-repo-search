@@ -16,7 +16,6 @@ const searchFormState = {
 
 const App = () => {
     const [formState, dispatch] = useReducer(formReducer, searchFormState);
-    const { searchQuery, sortQuery, filterQuery } = formState;
     const [searchResults, setSearchResults] = useState(null);
     const [submitBtnState, setSubmitBtnState] = useState(false);
 
@@ -46,7 +45,7 @@ const App = () => {
         e.preventDefault();
         try {
             setSubmitBtnState(true);
-            const getApi = await fetch(`https://api.github.com/search/repositories?q=${searchQuery + filterQuery + sortQuery}`);
+            const getApi = await fetch(`https://api.github.com/search/repositories?q=${formState.searchQuery}${formState.filterQuery}${formState.sortQuery}`);
             if (!getApi.ok) throw new Error('Github Request failed');
             const apiResponse = await getApi.json();
             setSearchResults(apiResponse);
