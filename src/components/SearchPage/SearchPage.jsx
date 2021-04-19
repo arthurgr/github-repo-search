@@ -14,7 +14,7 @@ const SearchPage = ({
                     className="form-control mb-3 col-12 col-lg-5"
                     type="text"
                     name="searchQuery"
-                    value={formState.search}
+                    value={formState.searchQuery}
                     onChange={(e) => buildQuery(e, 'SEARCH')}
                     required
                 />

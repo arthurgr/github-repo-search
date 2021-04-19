@@ -24,7 +24,7 @@ const App = () => {
         let finishedPayload = null;
         switch (type) {
             case 'SEARCH':
-                finishedPayload = `q=${e.target.value}`;
+                finishedPayload = e.target.value;
                 break;
             case 'FILTER':
                 finishedPayload = `+language:"${e.target.value}"`;
@@ -46,7 +46,7 @@ const App = () => {
         e.preventDefault();
         try {
             setSubmitBtnState(true);
-            const getApi = await fetch(`https://api.github.com/search/repositories?${searchQuery + filterQuery + sortQuery}`);
+            const getApi = await fetch(`https://api.github.com/search/repositories?q=${searchQuery + filterQuery + sortQuery}`);
             if (!getApi.ok) throw new Error('Github Request failed');
             const apiResponse = await getApi.json();
             setSearchResults(apiResponse);
