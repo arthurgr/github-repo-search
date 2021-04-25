@@ -20,25 +20,11 @@ const App = () => {
     const [submitBtnState, setSubmitBtnState] = useState(false);
 
     const buildQuery = (e, type) => {
-        let finishedPayload = null;
-        switch (type) {
-            case 'SEARCH':
-                finishedPayload = e.target.value;
-                break;
-            case 'FILTER':
-                finishedPayload = `+language:"${e.target.value}"`;
-                break;
-            case 'SORT':
-                finishedPayload = `&sort=${e.target.value}`;
-                break;
-            default:
-                break;
-        }
-        return finishedPayload ? dispatch({
-            type: 'HANDLE INPUT',
+        dispatch({
+            type,
             field: e.target.name,
-            payload: finishedPayload,
-        }) : formState;
+            payload: e.target.value,
+        });
     };
 
     const searchSubmitHandler = async (e) => {
